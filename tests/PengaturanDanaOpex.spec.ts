@@ -5,6 +5,8 @@ import { loginOPEX } from './loginOPEX';
 
 test('Pengaturan Dana',async ({ page }) => {
 
+test.skip(!!process.env.CI, 'Domain internal BAF, tidak bisa diakses dari GitHub-hosted runner')
+
  test.setTimeout(90000)
 const screenshotPaths: string[] = []
 

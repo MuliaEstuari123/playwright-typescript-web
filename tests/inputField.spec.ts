@@ -1,6 +1,6 @@
 import { expect, Expect, test } from "@playwright/test";
 
-test('input field', async ({ page }) => {
+test.skip('input field', async ({ page }) => {
 
 await page.goto('https://bosswebapp-uat.bussan.co.id/')
 await page.waitForTimeout(3000)

@@ -7,6 +7,8 @@ import { uploadFile } from './UploadFile';
 
 test('List Order NMC', async ({ page }) => {
 
+  test.skip(!!process.env.CI, 'Domain internal BAF, tidak bisa diakses dari GitHub-hosted runner')
+
   test.setTimeout(90000)
   const screenshotPaths: string[] = []
 
