@@ -1,26 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { loginSandia } from './loginSandiaProd.spec';
-import { pilihMenuSandia } from './loginSandiaProd.spec';
-import { PDFDocument } from 'pdf-lib';
-import * as fs from 'fs';
-import { waitForDebugger } from 'inspector';
+import { loginSandia, pilihMenuSandia } from './loginSandiaProd';
+import { combineScreenshotsToPdf } from "./ScreenshotsToPdf";
+import { uploadFile } from './UploadFile';
 
-async function combineScreenshotsToPdf(imagePaths: string[], outputPath: string) {
-  const pdfDoc = await PDFDocument.create()
 
-  for (const imgPath of imagePaths) {
-    if (!fs.existsSync(imgPath)) continue // skip kalau file gak ada
-    const imgBytes = fs.readFileSync(imgPath)
-    const img = await pdfDoc.embedPng(imgBytes)
-    const page = pdfDoc.addPage([img.width, img.height])
-    page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height })
-  }
-
-  const pdfBytes = await pdfDoc.save()
-  const outputDir = outputPath.substring(0, outputPath.lastIndexOf('/'))
-  fs.mkdirSync(outputDir, { recursive: true })
-  fs.writeFileSync(outputPath, pdfBytes)
-}
 
 test('List Order NMC', async ({ page }) => {
 
@@ -287,25 +270,29 @@ besok.setDate(besok.getDate() + 1)
 const mm = String(besok.getMonth() + 1).padStart(2, '0')
 const dd = String(besok.getDate()).padStart(2, '0')
 const yyyy = besok.getFullYear()
-const tanggalBesok = `${mm}/${dd}/${yyyy}`
+const tanggalBesok = `${yyyy}/${mm}/${dd}`
+
+console.log('Tanggal yang akan diisi:', tanggalBesok)
 
 await expect(objTanggalJam).toBeVisible()
 await objTanggalJam.click()
 await objTanggalJam.fill(tanggalBesok)
-
 await page.waitForTimeout(500)
+
 await page.locator('td.rdtTimeToggle').click()
 
-const targetJam = 16
+const targetJam = 21
 for (let i = 0; i < targetJam; i++) {
-  await page.locator('div.rdtCounters div:nth-child(1) span:nth-child(2)').click()
+  await page.locator('.rdtCounter').nth(0).locator('.rdtBtn').first().click()
   await page.waitForTimeout(100)
 }
+
+await page.locator('body').click({ position: { x: 10, y: 10 } })
+await page.waitForTimeout(300)
 
 shot = 'test-results/step-screenshots/tanggal-jam-survey.png'
 await page.screenshot({ path: shot })
 screenshotPaths.push(shot)
-
 
 'Sumber Aplikasi'
 const SumberAplikasi = 'BAF Employee'
@@ -315,6 +302,8 @@ await objSumberAplikasi.pressSequentially(SumberAplikasi,{ delay : 50 })
 await page.waitForTimeout(500)
 await objSumberAplikasi.press('ArrowDown')
 await objSumberAplikasi.press('Enter')
+
+
 
 
 

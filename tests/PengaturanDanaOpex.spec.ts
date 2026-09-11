@@ -1,7 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { loginOPEX } from "./loginOPEX.spec";
 import { combineScreenshotsToPdf } from "./ScreenshotsToPdf";
-
+import { loginOPEX } from './loginOPEX';
 
 
 test('Pengaturan Dana',async ({ page }) => {

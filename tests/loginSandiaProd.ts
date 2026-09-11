@@ -1,13 +1,14 @@
 import { expect, test, Page } from '@playwright/test';
+import 'dotenv/config';
 
-let urlSandia = 'https://sandia-panel-baf-preprod.apps.cntrdev.bussan.co.id/'
-let Email = 'viqih.ayudya@baf.id'
-let Password = 'Preprod123!100'
+let urlSandiaPreProd = 'https://sandia-panel-baf-preprod.apps.cntrdev.bussan.co.id/'
+let Email = process.env.SANDIA_EMAIL_PREPROD!
+let Password = process.env.SANDIA_PASSWORD_PREPROD!
 
 export async function loginSandia(page: Page) {
 
   await test.step('open browser', async () => {
-    await page.goto(urlSandia)
+    await page.goto(urlSandiaPreProd)
     await page.waitForTimeout(2000)
   });
 

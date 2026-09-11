@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { loginSandia } from './loginSandia.spec';
-import { pilihMenuSandia } from './loginSandia.spec';
+import { loginSandia, pilihMenuSandia } from './loginSandia';
 import { combineScreenshotsToPdf } from "./ScreenshotsToPdf";
 import { uploadFile } from './UploadFile';
 

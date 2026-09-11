@@ -1,8 +1,8 @@
-import { test, expect, errors, Page } from '@playwright/test';
+import { expect, test, Page } from '@playwright/test';
+
 import 'dotenv/config';
 
 const URL = 'https://bosswebapp-uat.bussan.co.id/authorize?client_id=e6b05c07-474b-427b-adcc-aaec225548d6&redirect_uri=https%3A%2F%2Fbosswebapp-uat.bussan.co.id%2Fcallback&response_type=code&scope=openid+profile+offline_access&state=15c05eea9bb140349e2b6bff66ea34f5&code_challenge=lDA1byTccS6tuZJEbYlBkcC0MTcS7A6JVK0r8Sgm-cA&code_challenge_method=S256'
-
 
 const username = process.env.OPEX_EMAIL!
 const password = process.env.OPEX_PASSWORD!
