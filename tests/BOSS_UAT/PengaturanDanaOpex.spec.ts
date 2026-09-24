@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { combineScreenshotsToPdf } from "./ScreenshotsToPdf";
+import { combineScreenshotsToPdf } from "../Helper/ScreenshotsToPdf";
 import { loginOPEX } from './loginOPEX';
 
+const testStart = new Date()
 
-test('Pengaturan Dana',async ({ page }) => {
+test('Pengaturan Dana',async ({ page },testInfo) => {
 
 test.skip(!!process.env.CI, 'Domain internal BAF, tidak bisa diakses dari GitHub-hosted runner')
 
@@ -48,7 +49,16 @@ shot = 'test-results/step-screenshots/pilih-area-office.png'
 await page.screenshot({ path: shot })
 screenshotPaths.push(shot)
 
-await combineScreenshotsToPdf(screenshotPaths, 'test-results/report/Pengaturan-Dana-OPEX.pdf')
+await combineScreenshotsToPdf(
+  screenshotPaths,
+  'test-results/report/Inquiry-Master-Group-Type.pdf',
+  {
+    testName: testInfo.title,
+    status: testInfo.status ?? 'unknown',
+    startTime: testStart,
+    environment: 'UAT',
+  }
+)
 
 
 })

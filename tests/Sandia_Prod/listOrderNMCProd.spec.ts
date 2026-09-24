@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { loginSandia, pilihMenuSandia } from './loginSandia';
-import { combineScreenshotsToPdf } from "./ScreenshotsToPdf";
-import { uploadFile } from './UploadFile';
+import { loginSandia, pilihMenuSandia } from './loginSandiaProd';
+import { combineScreenshotsToPdf } from '../Helper/ScreenshotsToPdf';
+import { uploadFile } from '../Helper/UploadFile';
 
-///npm install dotenv --save-dev
+const testStart = new Date()
 
-test('List Order NMC', async ({ page }) => {
+test('List Order NMC', async ({ page },testInfo) => {
 
   test.skip(!!process.env.CI, 'Domain internal BAF, tidak bisa diakses dari GitHub-hosted runner')
 
@@ -17,15 +17,14 @@ test('List Order NMC', async ({ page }) => {
   await pilihMenuSandia(page, 'NMC');
 
   'klik menu'
-  const objListOrderNMC = page.getByRole('link', { name: 'List Order' })
+  const objListOrderNMC = page.locator('a').filter({ hasText: 'List Order NMC' }).first()
   await expect(objListOrderNMC).toBeVisible()
   await objListOrderNMC.click()
 
   'klik tambah order'
   const objTambahOrder = page.getByRole('button', { name: 'Tambah Order' })
-  await expect(objTambahOrder).toBeVisible()
+  await expect(objListOrderNMC).toBeVisible()
   await objTambahOrder.click()
-  await page.waitForTimeout(2000)
   let shot = 'test-results/step-screenshots/klik-tambah-order.png'
   await page.screenshot({ path: shot })
   screenshotPaths.push(shot)
@@ -43,11 +42,11 @@ test('List Order NMC', async ({ page }) => {
   screenshotPaths.push(shot)
 
   'select Dealer'
-  const dealer = 'PELANGI'
+  const dealer = 'pelangi'
   const objDealer = page.getByRole('textbox', { name: 'Dealer' })
   await expect(objDealer).toBeVisible()
   await objDealer.pressSequentially(dealer, { delay: 50 })
-  await page.waitForTimeout(500)
+  await page.waitForTimeout(1000)
   await objDealer.press('ArrowDown')
   await objDealer.press('Enter')
   shot = 'test-results/step-screenshots/select-dealer.png'
@@ -117,20 +116,20 @@ test('List Order NMC', async ({ page }) => {
   'Alamat Tinggal'
   const Alamat = 'palm jumeirah'
   const objAlamat = page.locator('[name="KTPAlamat"]')
-  await expect(objAlamat).toBeVisible();
+  await expect(objHP2).toBeVisible();
   await objAlamat.fill(Alamat)
 
-  // 'RT'
-  // const RT = '085'
-  // const objRT = page.locator('[name="KTPRT"]')
-  // await expect(objRT).toBeVisible();
-  // await objRT.fill(RT)
+  'RT'
+  const RT = '085'
+  const objRT = page.locator('[name="KTPRT"]')
+  await expect(objRT).toBeVisible();
+  await objRT.fill(RT)
 
-  // 'RW'
-  // const RW = '085'
-  // const objRW = page.locator('[name="KTPRW"]')
-  // await expect(objRW).toBeVisible();
-  // await objRW.fill(RW)
+  'RW'
+  const RW = '085'
+  const objRW = page.locator('[name="KTPRW"]')
+  await expect(objRW).toBeVisible();
+  await objRW.fill(RW)
 
   'Provinsi'
   const Provinsi = 'Jakarta'
@@ -139,7 +138,6 @@ test('List Order NMC', async ({ page }) => {
   await objProvinsi.pressSequentially(Provinsi,{ delay : 50 })
   await page.waitForTimeout(500)
   await objProvinsi.press('ArrowDown')
-    await page.waitForTimeout(500)
   await objProvinsi.press('Enter')
   shot = 'test-results/step-screenshots/select-provinsi.png'
   await page.screenshot({ path: shot })
@@ -152,7 +150,6 @@ test('List Order NMC', async ({ page }) => {
   await objKota.pressSequentially(Kota, { delay: 50 })
   await page.waitForTimeout(500)
   await objKota.press('ArrowDown')
-    await page.waitForTimeout(500)
   await objKota.press('Enter')
 
   'kecamatan'
@@ -162,7 +159,6 @@ test('List Order NMC', async ({ page }) => {
   await objKecamatan.pressSequentially(kecamatan, { delay: 50 })
   await page.waitForTimeout(500)
   await objKecamatan.press('ArrowDown')
-    await page.waitForTimeout(500)
   await objKecamatan.press('Enter')
   shot = 'test-results/step-screenshots/input-kecamatan.png'
   await page.screenshot({ path: shot })
@@ -175,7 +171,6 @@ await expect(objKelurahan).toBeVisible()
 await objKelurahan.pressSequentially(kelurahan,{ delay : 50 })
 await page.waitForTimeout(500)
 await objKelurahan.press('ArrowDown')
-  await page.waitForTimeout(500)
 await objKelurahan.press('Enter')
 shot = 'test-results/step-screenshots/input-kelurahan.png'  
 await page.screenshot( { path: shot })
@@ -218,7 +213,7 @@ await objTipeMotor.press('ArrowDown')
 await objTipeMotor.press('Enter')
 
 'Tahun Motor'
-const TahunMotor = '2025'
+const TahunMotor = '2024'
 const objTahunMotor = page.getByRole('textbox', { name : 'Tahun Motor' })
 await expect(objTahunMotor).toBeVisible()
 await objTahunMotor.pressSequentially(TahunMotor,{ delay : 50 })
@@ -372,13 +367,17 @@ console.log('Full text:', fullText)
 const noAplikasi = fullText.replace(/.*No Aplikasi ?:\s*/, '').trim()
 console.log('Nomor Aplikasi:', noAplikasi)
 
-shot = 'test-results/step-screenshots/no-aplikasi.png'
-await page.screenshot({ path: shot })
-screenshotPaths.push(shot)
 
-  // gabungin semua screenshot jadi 1 PDF di akhir test
-  await combineScreenshotsToPdf(screenshotPaths, 'test-results/report/list-order-nmc-report.pdf')
-
+await combineScreenshotsToPdf(
+    screenshotPaths,
+    'test-results/report/List-Order-NMC.pdf',
+    {
+      testName: testInfo.title,
+      status: testInfo.status ?? 'unknown',
+      startTime: testStart,
+      environment: 'PreProd',
+    }
+  )
 
 
 });
