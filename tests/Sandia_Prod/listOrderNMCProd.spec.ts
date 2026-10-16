@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { loginSandia, pilihMenuSandia } from './loginSandiaProd';
+import { loginSandiaPreProd, pilihMenuSandia } from './loginSandiaProd';
 import { combineScreenshotsToPdf } from '../Helper/ScreenshotsToPdf';
 import { uploadFile } from '../Helper/UploadFile';
 
@@ -13,11 +13,12 @@ test('List Order NMC', async ({ page },testInfo) => {
   const screenshotPaths: string[] = []
 
   'login menu NMC'
-  await loginSandia(page);
+  await loginSandiaPreProd(page);
   await pilihMenuSandia(page, 'NMC');
 
   'klik menu'
   const objListOrderNMC = page.locator('a').filter({ hasText: 'List Order NMC' }).first()
+  await page.waitForTimeout(2000)
   await expect(objListOrderNMC).toBeVisible()
   await objListOrderNMC.click()
 

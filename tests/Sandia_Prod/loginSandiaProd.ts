@@ -5,7 +5,7 @@ let urlSandiaPreProd = 'https://sandia-panel-baf-preprod.apps.cntrdev.bussan.co.
 let Email = process.env.SANDIA_EMAIL_PREPROD!
 let Password = process.env.SANDIA_PASSWORD_PREPROD!
 
-export async function loginSandia(page: Page) {
+export async function loginSandiaPreProd(page: Page) {
 
   await test.step('open browser', async () => {
     await page.goto(urlSandiaPreProd)
@@ -51,21 +51,35 @@ export async function pilihMenuSandia(page: Page, menu: string) {
       await expect(objTextNMC).toBeVisible();
       await objBtnGo1.click();
       await expect(objbtnOK).toBeVisible();
-      await objbtnOK.click();
+      await objbtnOK.click()
       break;
     }
 
     case 'DANA SYARIAH': {
       const objBtnGo2 = page.locator("//a[@value='136']//button[@type='button'][normalize-space()='Go']");
       const objTextDanaSyariah = page.locator("//i[normalize-space()='Akses App Input Order Dana Syariah (P)']");
-      const objbtnOK = page.getByText('OK')
+      const objbtnOK2 = page.getByText('OK')
 
       await objBtnGo2.scrollIntoViewIfNeeded();
       await expect(objTextDanaSyariah).toBeVisible();
       await objBtnGo2.click();
-      await expect(objbtnOK).toBeVisible();
-      await objbtnOK.click();
+      await expect(objbtnOK2).toBeVisible();
+      await objbtnOK2.click();
       break;
+    }
+
+    case 'UMC' : {
+      const objBtnGo3 = page.locator("//a[@value='21']//button[@type='button'][normalize-space()='Go']");
+      const objTextUMC = page.locator("//i[normalize-space()='Akses App Internal Order UMC']");
+      const objbtnOK3 = page.getByText('OK')
+
+      await objBtnGo3.scrollIntoViewIfNeeded();
+      await expect(objTextUMC).toBeVisible();
+      await objBtnGo3.click();
+      await expect(objbtnOK3).toBeVisible();
+      await objbtnOK3.click();
+      break;
+
     }
 
     default: {

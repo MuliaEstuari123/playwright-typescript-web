@@ -20,11 +20,13 @@ test('List Order NMC', async ({ page },testInfo) => {
 
   'klik menu'
   const objListOrderNMC = page.getByRole('link', { name: 'List Order' })
+  await page.waitForTimeout(2000)
   await expect(objListOrderNMC).toBeVisible()
   await objListOrderNMC.click()
 
   'klik tambah order'
-  const objTambahOrder = page.getByRole('button', { name: 'Tambah Order' })
+  const objTambahOrder =  page.getByRole('button', { name: 'Tambah Order' })
+  await page.waitForTimeout(2000)
   await expect(objTambahOrder).toBeVisible()
   await objTambahOrder.click()
   await page.waitForTimeout(2000)
@@ -57,7 +59,7 @@ test('List Order NMC', async ({ page },testInfo) => {
   screenshotPaths.push(shot)
 
   'Nama Konsumen'
-  const NamaKonsumen = 'Rita Ora'
+  const NamaKonsumen = 'Rita zenaya'
   const objNamaKonsumen = page.locator('[name="Fullname"]')
   await expect(objNamaKonsumen).toBeVisible()
   await objNamaKonsumen.fill(NamaKonsumen)
@@ -141,7 +143,7 @@ test('List Order NMC', async ({ page },testInfo) => {
   await objProvinsi.pressSequentially(Provinsi,{ delay : 50 })
   await page.waitForTimeout(500)
   await objProvinsi.press('ArrowDown')
-    await page.waitForTimeout(500)
+  await page.waitForTimeout(500)
   await objProvinsi.press('Enter')
   shot = 'test-results/step-screenshots/select-provinsi.png'
   await page.screenshot({ path: shot })
@@ -177,7 +179,7 @@ await expect(objKelurahan).toBeVisible()
 await objKelurahan.pressSequentially(kelurahan,{ delay : 50 })
 await page.waitForTimeout(500)
 await objKelurahan.press('ArrowDown')
-  await page.waitForTimeout(500)
+await page.waitForTimeout(500)
 await objKelurahan.press('Enter')
 shot = 'test-results/step-screenshots/input-kelurahan.png'  
 await page.screenshot( { path: shot })

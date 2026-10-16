@@ -8,6 +8,8 @@ const testStart = new Date()
 
 test('Upload Master HJM', async ({ page },testInfo) => {
 
+test.skip(!!process.env.CI, 'Domain internal BAF, tidak bisa diakses dari GitHub-hosted runner')
+
 test.setTimeout(90000)
 const screenshotPaths:string[]=[]
 

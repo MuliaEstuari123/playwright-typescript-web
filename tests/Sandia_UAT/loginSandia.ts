@@ -45,13 +45,13 @@ export async function pilihMenuSandia(page: Page, menu: string) {
     case 'NMC': {
       const objBtnGo1 = page.locator("//a[@value='20']//button[@type='button'][normalize-space()='Go']");
       const objTextNMC = page.locator("//i[normalize-space()='Akses App Internal Sandia NMC']");
-      const objbtnOK = page.getByText('OK')
+      const objbtnOK1 = page.getByText('OK')
 
       await objBtnGo1.scrollIntoViewIfNeeded();
       await expect(objTextNMC).toBeVisible();
       await objBtnGo1.click();
-      await expect(objbtnOK).toBeVisible();
-      await objbtnOK.click();
+      await expect(objbtnOK1).toBeVisible();
+      await objbtnOK1.click();
       break;
     }
 
@@ -59,14 +59,45 @@ export async function pilihMenuSandia(page: Page, menu: string) {
       const objBtnGo2 = page.locator("//a[@value='15']//button[@type='button'][normalize-space()='Go']")
 
       const objTextDanaSyariah = page.locator("//i[normalize-space()='Akses App Internal Sandia DANA SYARIAH']");
-      const objbtnOK = page.getByText('OK')
+      const objbtnOK2 = page.getByText('OK')
 
       await objBtnGo2.scrollIntoViewIfNeeded();
       await expect(objTextDanaSyariah).toBeVisible();
       await objBtnGo2.click();
-      await expect(objbtnOK).toBeVisible();
-      await objbtnOK.click();
+      await expect(objbtnOK2).toBeVisible();
+      await objbtnOK2.click();
       break;
+    }
+
+    case 'UMC' : {
+      const objBtnGo3 = page.locator("//a[@value='21']//button[@type='button'][normalize-space()='Go']")
+      const objTextUMC = page.locator("//i[normalize-space()='Akses App Internal Order UMC']")
+      const objbtnOK3 = page.getByText('OK')
+
+      await objBtnGo3.scrollIntoViewIfNeeded();
+      await expect(objTextUMC).toBeVisible();
+      await objBtnGo3.click();
+      await expect(objbtnOK3).toBeVisible();
+      await objbtnOK3.click();
+      break;
+
+    }
+
+    case 'CANDICE' : {
+
+      const objBtnGo4 = page.locator("//a[@value='36']//button[@type='button'][normalize-space()='Go']")
+      const objTextCandice = page.locator("//i[normalize-space()='Akses DBM Admin Aplikasi CANDICE']")
+      const objbtnOK4 = page.getByText('OK')
+
+      await objBtnGo4.scrollIntoViewIfNeeded();
+      await expect(objTextCandice).toBeVisible();
+      await objBtnGo4.click();
+      await expect(objbtnOK4).toBeVisible();
+      await objbtnOK4.click();
+      break;
+
+
+
     }
 
     default: {

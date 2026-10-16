@@ -24,6 +24,7 @@ var customer = {
 
 }
 
+
 customer.firtName = 'gaylee'
 customer.LastName = 'averil'
 
@@ -38,7 +39,7 @@ console.log(`${customer.firtName} ${customer.LastName}`)
 
 
 
-test('ulang lagi', async ({page}) => {
+test.skip('ulang lagi', async ({page}) => {
 
 var Country = {
 
@@ -52,6 +53,16 @@ var Country = {
 console.log(Country.Japan)
 
 
+
 });
+
+test('Web Tables Loops',async({ page })=> {
+ 
+await page.goto('https://playground.bondaracademy.com/pages/tables/smart-table')
+
+
+
+      
+})
 
 
